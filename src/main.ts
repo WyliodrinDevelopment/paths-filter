@@ -40,7 +40,7 @@ async function run(): Promise<void> {
   } catch (error) {
     core.setFailed(error.message)
     core.setOutput('changes', {
-      failed: true
+      changesFound: true
     })
   }
 }
