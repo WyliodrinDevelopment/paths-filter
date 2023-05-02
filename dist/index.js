@@ -532,7 +532,9 @@ async function run() {
         // core.setFailed(error.message)
         for (let folder in folders) {
             console.log(`Folder: ${folder}`);
+            core.startGroup(`Filter ${folder} = true`);
             core.setOutput(folder, true);
+            core.endGroup();
         }
     }
 }
