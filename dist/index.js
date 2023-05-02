@@ -504,6 +504,7 @@ const git = __importStar(__nccwpck_require__(3374));
 const shell_escape_1 = __nccwpck_require__(8986);
 const csv_escape_1 = __nccwpck_require__(7402);
 async function run() {
+    let folders = {};
     try {
         const workingDirectory = core.getInput('working-directory', { required: false });
         if (workingDirectory) {
@@ -521,6 +522,7 @@ async function run() {
             return;
         }
         const filter = new filter_1.Filter(filtersYaml);
+        folders = filter.rules;
         const files = await getChangedFiles(token, base, ref, initialFetchDepth);
         core.info(`Detected ${files.length} changed files`);
         const results = filter.match(files);
@@ -528,9 +530,11 @@ async function run() {
     }
     catch (error) {
         // core.setFailed(error.message)
-        core.setOutput('changes', {
-            changesFound: true
-        });
+        for (let folder in folders) {
+            core.setOutput('changes', {
+                [folder]: true
+            });
+        }
     }
 }
 function isPathInput(text) {

@@ -13,6 +13,7 @@ import {csvEscape} from './list-format/csv-escape'
 type ExportFormat = 'none' | 'csv' | 'json' | 'shell' | 'escape'
 
 async function run(): Promise<void> {
+  let folders = {};
   try {
     const workingDirectory = core.getInput('working-directory', {required: false})
     if (workingDirectory) {
@@ -33,15 +34,18 @@ async function run(): Promise<void> {
     }
 
     const filter = new Filter(filtersYaml)
+    folders = filter.rules;
     const files = await getChangedFiles(token, base, ref, initialFetchDepth)
     core.info(`Detected ${files.length} changed files`)
     const results = filter.match(files)
     exportResults(results, listFiles)
   } catch (error) {
     // core.setFailed(error.message)
-    core.setOutput('changes', {
-      changesFound: true
-    })
+    for (let folder in folders) {
+      core.setOutput('changes', {
+        [folder]: true
+      })
+    }
   }
 }
 
