@@ -530,12 +530,14 @@ async function run() {
     }
     catch (error) {
         // core.setFailed(error.message)
+        let outputs = {};
         for (let folder in folders) {
             console.log(`Folder: ${folder}`);
-            core.setOutput('changes', {
-                [folder]: 'true'
-            });
+            outputs = { [folder]: "true", ...outputs };
         }
+        core.setOutput('changes', {
+            outputs
+        });
     }
 }
 function isPathInput(text) {
