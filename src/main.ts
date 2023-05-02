@@ -39,6 +39,9 @@ async function run(): Promise<void> {
     exportResults(results, listFiles)
   } catch (error) {
     core.setFailed(error.message)
+    core.setOutput('changes', {
+      failed: true
+    })
   }
 }
 
