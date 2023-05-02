@@ -527,7 +527,10 @@ async function run() {
         exportResults(results, listFiles);
     }
     catch (error) {
-        core.setFailed(error.message);
+        // core.setFailed(error.message)
+        core.setOutput('changes', {
+            changesFound: true
+        });
     }
 }
 function isPathInput(text) {
