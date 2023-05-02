@@ -38,7 +38,7 @@ async function run(): Promise<void> {
     const results = filter.match(files)
     exportResults(results, listFiles)
   } catch (error) {
-    core.setFailed(error.message)
+    // core.setFailed(error.message)
     core.setOutput('changes', {
       changesFound: true
     })
