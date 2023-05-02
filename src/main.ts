@@ -42,8 +42,9 @@ async function run(): Promise<void> {
   } catch (error) {
     // core.setFailed(error.message)
     for (let folder in folders) {
+      console.log (`Folder: ${folder}`)
       core.setOutput('changes', {
-        [folder]: true
+        [folder]: 'true'
       })
     }
   }
